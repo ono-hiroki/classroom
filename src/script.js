@@ -8,10 +8,6 @@ import { OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 /**
  * Base
  */
-// Debug
-const gui = new dat.GUI({
-    width: 400
-})
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -38,16 +34,6 @@ const sunLight = new THREE.DirectionalLight(0xffffff, 1)
 sunLight.position.set(0, 1, 0)
 scene.add(sunLight)
 
-
-/**
- * Object
- */
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial()
-)
-
-scene.add(cube)
 /**
  * Textures
  */
@@ -64,41 +50,16 @@ bakedTexture.encoding = THREE.sRGBEncoding
 /**
  * Model
  */
-// gltfLoader.load(
-//     'house-add-color2.glb',
-//     // 'school_outside2.glb',
-//     (gltf) =>
-//     {
-//         console.log(gltf)
-//         gltf.scene.traverse((child) =>
-//         {
-//             child.material = bakedMaterial
-//         })
-//         scene.add(gltf.scene)
-//     }
-// )
-
-gltfLoader.load(
-    // 'house-add-color2.glb',
-    'school_outside3.glb',
-    (gltf) =>
-    {
-        console.log(gltf.scene)
-        // gltf.scene.scale.set(1000, 1000, 1000)
-        gltf.scene.traverse((child) =>
-        {
-            child.material = bakedMaterial
-        })
-
-        scene.add(gltf.scene)
-    }
-)
 
 const objLoader = new OBJLoader();
 objLoader.load(
     'kyositu.obj',
     function (obj) {
-        console.log(obj)
+
+        // objectのpositionを変更
+        obj.position.set(-2, 0, 2);
+        // objectを回転
+        obj.rotation.set(0, 0.8, 0);
         scene.add(obj);
 
     },
@@ -133,9 +94,12 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 4
-camera.position.y = 2
-camera.position.z = 4
+camera.position.x = 10
+camera.position.y = 5
+camera.position.z =5
+// カメラの向きを変える
+camera.lookAt(-10, 10, 10)
+
 scene.add(camera)
 
 // Controls
